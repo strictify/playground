@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\Admin;
 
+use App\Admin\Admin;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -9,10 +12,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
     /**
-     * @Route("/users", name="admin_users", methods={"GET"})
+     * @Route("/{segment}", name="admin_segment", methods={"GET"})
      */
-    public function index(): Response
+    public function index(string $segment, Admin $admin): Response
     {
-        return $this->render('admin_base.html.twig');
+        $paginator = $admin->getPaginator($segment);
+
+        return $this->render('admin/users/list.html.twig', [
+            'paginator' => $paginator,
+        ]);
     }
 }

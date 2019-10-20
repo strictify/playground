@@ -6,6 +6,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
+use function sprintf;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -21,8 +22,10 @@ class User extends BaseUser
      */
     protected $id;
 
+    /** @ORM\Column(type="string", nullable=false) */
     private string $firstName;
 
+    /** @ORM\Column(type="string", nullable=false) */
     private string $lastName;
 
     public function __construct(string $firstName, string $lastName)
@@ -30,6 +33,11 @@ class User extends BaseUser
         parent::__construct();
         $this->firstName = $firstName;
         $this->lastName = $lastName;
+    }
+
+    public function __toString()
+    {
+        return sprintf('%s %s', $this->getFirstName(), $this->getLastName());
     }
 
     public function setEmail($email): void
