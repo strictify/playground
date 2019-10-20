@@ -32,6 +32,12 @@ class User extends BaseUser
         $this->lastName = $lastName;
     }
 
+    public function setEmail($email): void
+    {
+        parent::setEmail($email);
+        $this->setUsername($email);
+    }
+
     public function getFirstName(): string
     {
         return $this->firstName;

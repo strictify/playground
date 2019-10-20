@@ -1,3 +1,27 @@
 controllers:
     resource: ../../src/Controller/
     type: annotation
+
+#Every logged user can access this route (dashboard etc)
+admin_dashboard:
+    resource: ../../src/Controller/Admin
+    type: annotation
+    prefix: /admin
+
+## There are for ROLE_ADMIN and above
+#admin_admin_access:
+#    resource: ../../src/Controller/Admin/AdminAccess
+#    type: annotation
+#    prefix: /admin/a
+#
+## These are just for ROLE_SUPPLIER; not even admins can access them (unless impersonating user)
+#admin_supplier_access:
+#    resource: ../../src/Controller/Admin/SupplierAccess
+#    type: annotation
+#    prefix: /admin/s
+#
+## These are just for ROLE_SUPPLIER; not even admins can access them (unless impersonating user)
+#admin_impersonation_access:
+#    resource: ../../src/Controller/Admin/ImpersonationAccess
+#    type: annotation
+#    prefix: /admin/i
