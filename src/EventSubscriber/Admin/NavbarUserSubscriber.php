@@ -10,6 +10,7 @@ use KevinPapst\AdminLTEBundle\Event\ShowUserEvent;
 use KevinPapst\AdminLTEBundle\Event\SidebarUserEvent;
 use KevinPapst\AdminLTEBundle\Model\UserModel;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Security\Core\Security;
 
 class NavbarUserSubscriber  implements EventSubscriberInterface
@@ -38,18 +39,20 @@ class NavbarUserSubscriber  implements EventSubscriberInterface
             return;
         }
 
-        /* @var $myUser User */
-        $myUser = $this->security->getUser();
+        $user = $this->security->getUser();
+        if (!$user instanceof User) {
+            throw new AccessDeniedHttpException();
+        }
 
-        $user = new UserModel();
-        $user
-            ->setId($myUser->getId())
-            ->setName($myUser->getUsername())
-            ->setUsername($myUser->getUsername())
+        $model = new UserModel();
+        $model
+            ->setId((string)$user->getId())
+            ->setName($user->getFirstName())
+            ->setUsername((string)$user->getUsername())
             ->setIsOnline(true)
-            ->setTitle((string)$myUser)
+            ->setTitle((string)$user)
         ;
 
-        $event->setUser($user);
+        $event->setUser($model);
     }
 }

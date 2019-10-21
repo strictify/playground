@@ -10,10 +10,14 @@ use function sprintf;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ *
+ * @psalm-suppress PropertyNotSetInConstructor
+ * @psalm-suppress DeprecatedInterface
  */
 class User extends BaseUser
 {
     /**
+     * @var int
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -28,11 +32,13 @@ class User extends BaseUser
     /** @ORM\Column(type="string", nullable=false) */
     private string $lastName;
 
-    public function __construct(string $firstName, string $lastName)
+    public function __construct(string $firstName, string $lastName, string $email, string $plainPassword)
     {
         parent::__construct();
         $this->firstName = $firstName;
         $this->lastName = $lastName;
+        $this->setEmail($email);
+        $this->setPlainPassword($plainPassword);
     }
 
     public function __toString()
@@ -40,6 +46,10 @@ class User extends BaseUser
         return sprintf('%s %s', $this->getFirstName(), $this->getLastName());
     }
 
+    /**
+     * @psalm-suppress MissingParamType
+     * @psalm-suppress ImplementedReturnTypeMismatch
+     */
     public function setEmail($email): void
     {
         parent::setEmail($email);

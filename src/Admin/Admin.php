@@ -10,9 +10,10 @@ use function sprintf;
 
 class Admin
 {
-    /** @var AdminInterface[] */
+    /** @var AdminInterface[]|iterable<array-key, AdminInterface> */
     private iterable $admins;
 
+    /** @param iterable<array-key, AdminInterface> $admins */
     public function __construct(iterable $admins)
     {
         $this->admins = $admins;
