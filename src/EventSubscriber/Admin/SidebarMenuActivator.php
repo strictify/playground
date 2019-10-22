@@ -49,7 +49,7 @@ class SidebarMenuActivator implements EventSubscriberInterface
             return;
         }
 
-        $this->activateTarget($sidebarMenuAnnotation->getLabel(), $event->getItems());
+        $this->activateTarget($sidebarMenuAnnotation->label, $event->getItems());
     }
 
     /**

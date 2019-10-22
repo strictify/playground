@@ -4,21 +4,21 @@ declare(strict_types=1);
 
 namespace App\Annotation;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ConfigurationAnnotation;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ConfigurationInterface;
 
 /**
  * @Annotation
  */
-class SidebarMenu extends ConfigurationAnnotation
+class SidebarMenu implements ConfigurationInterface
 {
     /** @psalm-suppress PropertyNotSetInConstructor */
-    private ?string $group;
+    public ?string $group = null;
 
     /** @psalm-suppress PropertyNotSetInConstructor */
-    private string $label;
+    public string $label;
 
     /** @psalm-suppress PropertyNotSetInConstructor */
-    private string $icon;
+    public string $icon;
 
     public function getAliasName(): string
     {
@@ -28,35 +28,5 @@ class SidebarMenu extends ConfigurationAnnotation
     public function allowArray(): bool
     {
         return false;
-    }
-
-    public function getLabel(): string
-    {
-        return $this->label;
-    }
-
-    public function setLabel(string $label): void
-    {
-        $this->label = $label;
-    }
-
-    public function getIcon(): string
-    {
-        return $this->icon;
-    }
-
-    public function setIcon(string $icon): void
-    {
-        $this->icon = $icon;
-    }
-
-    public function getGroup(): ?string
-    {
-        return $this->group;
-    }
-
-    public function setGroup(?string $group): void
-    {
-        $this->group = $group;
     }
 }

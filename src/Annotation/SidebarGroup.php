@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace App\Annotation;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ConfigurationAnnotation;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ConfigurationInterface;
 
 /**
  * @Annotation
  */
-class SidebarGroup extends ConfigurationAnnotation
+class SidebarGroup implements ConfigurationInterface
 {
     /** @psalm-suppress PropertyNotSetInConstructor */
-    private string $name;
+    public string $name;
 
     public function getAliasName(): string
     {
@@ -23,15 +23,4 @@ class SidebarGroup extends ConfigurationAnnotation
     {
         return false;
     }
-
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): void
-    {
-        $this->name = $name;
-    }
-
 }

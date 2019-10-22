@@ -61,13 +61,13 @@ class SidebarMenuBuilder implements EventSubscriberInterface
             if (!$annotation) {
                 continue;
             }
-            $label = $annotation->getLabel();
+            $label = $annotation->label;
             $menu = new MenuItemModel(
                 $label,
                 $this->humanize($label),
                 $route->getPath(),
                 [],
-                $annotation->getIcon(),
+                $annotation->icon,
             );
             $event->addItem($menu);
         }
