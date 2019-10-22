@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminController extends AbstractController
 {
     /**
-     * @Route("/{segment}", name="admin_segment", methods={"GET"})
+     * @Route("/automatic/{segment}", name="admin_segment", methods={"GET"})
      */
     public function index(string $segment, Admin $admin): Response
     {

@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace App\EventSubscriber\Admin;
-
 
 use App\Entity\User;
 use KevinPapst\AdminLTEBundle\Event\NavbarUserEvent;
@@ -47,10 +47,8 @@ class NavbarUserSubscriber  implements EventSubscriberInterface
         $model = new UserModel();
         $model
             ->setId((string)$user->getId())
-            ->setName($user->getFirstName())
-            ->setUsername((string)$user->getUsername())
-            ->setIsOnline(true)
-            ->setTitle((string)$user)
+            ->setName((string)$user)
+            ->setTitle('Admin')
         ;
 
         $event->setUser($model);
