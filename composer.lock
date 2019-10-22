@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "55f4791d4fce9b2b3ac2966d40bb9d1a",
+    "content-hash": "29eee8571ed9d06eae2f2b0b34d04ec8",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -7872,16 +7872,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "3.6.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "7857b07f91bed5afae98574243fed7ec4088d623"
+                "reference": "8876499ddda136569f13e7c3f9ce045eb77c2530"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/7857b07f91bed5afae98574243fed7ec4088d623",
-                "reference": "7857b07f91bed5afae98574243fed7ec4088d623",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/8876499ddda136569f13e7c3f9ce045eb77c2530",
+                "reference": "8876499ddda136569f13e7c3f9ce045eb77c2530",
                 "shasum": ""
             },
             "require": {
@@ -7956,7 +7956,7 @@
                 "inspection",
                 "php"
             ],
-            "time": "2019-10-11T12:24:35+00:00"
+            "time": "2019-10-22T15:17:42+00:00"
         },
         {
             "name": "webmozart/glob",
@@ -8056,7 +8056,8 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "strictify/form-mapper-bundle": 20,
-        "roave/security-advisories": 20
+        "roave/security-advisories": 20,
+        "vimeo/psalm": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
