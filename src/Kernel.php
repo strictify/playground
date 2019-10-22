@@ -4,14 +4,22 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\Admin\Admin;
+use App\Admin\Registry\AdminInterface;
+use function class_exists;
+use function dirname;
+use function interface_exists;
+use function is_a;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\Resource\FileResource;
+use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\Routing\RouteCollectionBuilder;
 
-class Kernel extends BaseKernel
+class Kernel extends BaseKernel implements CompilerPassInterface
 {
     use MicroKernelTrait;
 
@@ -29,7 +37,7 @@ class Kernel extends BaseKernel
 
     public function getProjectDir(): string
     {
-        return \dirname(__DIR__);
+        return dirname(__DIR__);
     }
 
     protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader): void
@@ -51,5 +59,34 @@ class Kernel extends BaseKernel
         $routes->import($confDir.'/{routes}/'.$this->environment.'/**/*'.self::CONFIG_EXTS, '/', 'glob');
         $routes->import($confDir.'/{routes}/*'.self::CONFIG_EXTS, '/', 'glob');
         $routes->import($confDir.'/{routes}'.self::CONFIG_EXTS, '/', 'glob');
+    }
+
+    public function process(ContainerBuilder $container): void
+    {
+        $set = [
+            AdminInterface::class => Admin::class,
+        ];
+
+        $definitions = $container->getDefinitions();
+
+        foreach ($set as $interface => $serviceName) {
+            $tagged = $this->findServiceByInterface($interface, $definitions);
+            $target = $container->getDefinition($serviceName);
+            $target->setArgument(0, $tagged);
+        }
+    }
+
+    /** @param Definition[] $definitions */
+    private function findServiceByInterface(string $interface, array $definitions)
+    {
+        $tagged = [];
+        foreach ($definitions as $name => $definition) {
+            $class = $definition->getClass() ?: $name;
+            if (is_string($class) && interface_exists($interface, false) && class_exists($class, false) && is_a($class, $interface, true)) {
+                $tagged[$name] = $definition;
+            }
+        }
+
+        return $tagged;
     }
 }

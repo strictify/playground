@@ -24,4 +24,9 @@ class UsersAdmin implements AdminInterface
     {
         return $this->repository->findAll();
     }
+
+    public function getLabel(): string
+    {
+        return 'users';
+    }
 }

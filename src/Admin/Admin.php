@@ -26,10 +26,16 @@ class Admin
         return $admin->getPaginator();
     }
 
+    /** @return AdminInterface[]|iterable<array-key, AdminInterface> */
+    public function getDefinitions(): iterable
+    {
+        yield from $this->admins;
+    }
+
     private function getAdmin(string $segment): AdminInterface
     {
         foreach ($this->admins as $admin) {
-            if ($admin->supports($segment)) {
+            if ($admin->getLabel() === $segment) {
                 return $admin;
             }
         }

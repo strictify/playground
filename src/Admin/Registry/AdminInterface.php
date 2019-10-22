@@ -9,4 +9,6 @@ interface AdminInterface
     public function supports(string $segment): bool;
 
     public function getPaginator(): iterable;
+
+    public function getLabel(): string;
 }

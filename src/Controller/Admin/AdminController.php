@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class UserController extends AbstractController
+class AdminController extends AbstractController
 {
     /**
      * @Route("/{segment}", name="admin_segment", methods={"GET"})
