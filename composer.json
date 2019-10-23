@@ -47,7 +47,7 @@
         "symfony/profiler-pack": "*",
         "symfony/test-pack": "*",
         "symfony/web-server-bundle": "4.3.*",
-        "vimeo/psalm": "dev-master"
+        "vimeo/psalm": "dev-arrow-functions"
     },
     "config": {
         "preferred-install": {

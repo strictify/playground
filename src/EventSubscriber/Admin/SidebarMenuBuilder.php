@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\EventSubscriber\Admin;
 
+use App\Service\AdminAnnotationReader\AdminAnnotationsReader;
+use App\Service\AdminAnnotationReader\Struct\Leaf;
 use KevinPapst\AdminLTEBundle\Event\SidebarMenuEvent;
 use KevinPapst\AdminLTEBundle\Model\MenuItemModel;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -44,31 +46,28 @@ class SidebarMenuBuilder implements EventSubscriberInterface
         if (strpos($pathInfo, '/admin') !== 0) {
             return;
         }
-        $routes = $this->adminAnnotationsReader->getAdminRoutes();
 
-        $groups = $this->adminAnnotationsReader->getSidebarGroups();
-        foreach ($groups as $group) {
-            dump($group);
-        }
-
-        foreach ($groups as $group) {
-
-        }
-
-
-        foreach ($routes as $route) {
-            $annotation = $this->adminAnnotationsReader->getSidebarAnnotation($route);
-            if (!$annotation) {
-                continue;
-            }
-            $label = $annotation->label;
+        $tree = $this->adminAnnotationsReader->getTree();
+        /** @var Leaf[] $nodes */
+        foreach ($tree->getGrouped() as $group) {
             $menu = new MenuItemModel(
-                $label,
-                $this->humanize($label),
-                $route->getPath(),
+                $group->name,
+                $this->humanize($group->name),
+                '',
                 [],
-                $annotation->icon,
+                $group->icon,
             );
+            foreach ($group->leaves as $node) {
+                $menu->addChild(
+                    new MenuItemModel(
+                        $node->menu->label,
+                        $node->menu->label,
+                        $node->route->getPath(),
+                        [],
+                        $node->menu->icon
+                    )
+                );
+            }
             $event->addItem($menu);
         }
     }

@@ -5,26 +5,12 @@ declare(strict_types=1);
 namespace App\EventSubscriber\Admin;
 
 use App\Annotation\SidebarMenu;
-use Doctrine\Common\Annotations\Reader;
 use KevinPapst\AdminLTEBundle\Event\SidebarMenuEvent;
 use KevinPapst\AdminLTEBundle\Model\MenuItemModel;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Routing\RouterInterface;
 
 class SidebarMenuActivator implements EventSubscriberInterface
 {
-    private RouterInterface $router;
-    private Reader $reader;
-    private RequestStack $requestStack;
-
-    public function __construct(RouterInterface $router, Reader $reader, RequestStack $requestStack)
-    {
-        $this->router = $router;
-        $this->reader = $reader;
-        $this->requestStack = $requestStack;
-    }
-
     /** @see buildSidebarMenu */
     public static function getSubscribedEvents(): array
     {

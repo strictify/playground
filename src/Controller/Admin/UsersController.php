@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @SidebarGroup(name="Users module")
+ * @SidebarGroup(name="Users module", icon="fas fa-tachometer-alt")
  */
 class UsersController extends AbstractController
 {
@@ -30,7 +30,7 @@ class UsersController extends AbstractController
     /**
      * @Route("/users/edit", name="admin_users_edit", methods={"GET"})
      *
-     * @SidebarMenu(label="Users", icon="fas fa-tachometer-alt")
+     * @SidebarMenu(label="Handle users", icon="fas fa-tachometer-alt")
      */
     public function edit(): Response
     {

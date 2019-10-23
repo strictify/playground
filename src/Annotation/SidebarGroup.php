@@ -14,6 +14,9 @@ class SidebarGroup implements ConfigurationInterface
     /** @psalm-suppress PropertyNotSetInConstructor */
     public string $name;
 
+    /** @psalm-suppress PropertyNotSetInConstructor */
+    public string $icon;
+
     public function getAliasName(): string
     {
         return 'sidebar_group';
