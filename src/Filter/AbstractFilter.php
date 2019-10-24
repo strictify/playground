@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 namespace App\Filter;
 
+use App\ArgumentResolver\FilterArgumentValueResolver;
 use Symfony\Component\Form\{FormBuilderInterface, FormInterface, FormView};
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @see FilterArgumentValueResolver::resolve()
+ */
 abstract class AbstractFilter implements FilterInterface
 {
     private FormInterface $form;
