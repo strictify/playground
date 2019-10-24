@@ -1,6 +1,65 @@
 {% extends 'admin_base.html.twig' %}
 
-{% block page_content %}
-    asdasd
-{% endblock %}
+{% block page_title %}Users{% endblock %}
+{% block page_subtitle %}{% endblock %}
 
+{% block page_content %}
+
+    {% embed 'admin/_common/box.html.twig' %}
+
+        {% block box_footer %}
+            {{ pagerfanta(pager, 'twitter_bootstrap3') }}
+        {% endblock %}
+
+        {% block box_header %}
+            <h3 class="box-title"></h3>
+            <div class="box-tools">
+                <div class="input-group input-group-sm hidden-xs">
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <input type="text"
+                                   name="search"
+                                   class="form-control pull-right"
+                                   placeholder="Search"
+                                   value="{{ search }}">
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group-btn">
+                                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        {% endblock %}
+
+        {% block box_body %}
+            <table class="table table-hover">
+                <tbody>
+                <tr>
+                    <th>ID</th>
+                    <th>Full name</th>
+                    <th>Username</th>
+                    <th>Status</th>
+                </tr>
+                {# @var user \App\Entity\User #}
+                {% for user in pager %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>
+                            {% if user.enabled %}
+                                <span class="label label-success">Approved</span>
+                            {% else %}
+                                <span class="label label-danger">Pending</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endblock %}
+    {% endembed %}
+
+{% endblock %}

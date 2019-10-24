@@ -7,6 +7,7 @@ namespace App\Controller\Admin;
 use App\Admin\Admin;
 use App\Annotation\SidebarGroup;
 use App\Annotation\SidebarMenu;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,9 +23,15 @@ class UsersController extends AbstractController
      *
      * @SidebarMenu(label="Users", icon="fas fa-tachometer-alt")
      */
-    public function index(Request $request): Response
+    public function index(Request $request, UserRepository $repository): Response
     {
-        return $this->render('admin_base.html.twig');
+        $search = $request->query->getAlnum('search');
+        $pager = $repository->getPaginator($search);
+
+        return $this->render('admin/users/list.html.twig', [
+            'pager' => $pager,
+            'search' => $search,
+        ]);
     }
 
     /**
