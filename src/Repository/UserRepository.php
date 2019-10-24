@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Entity\User;
+use App\Filter\FilterInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
@@ -23,14 +25,25 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
-    public function getPaginator(string $search): Pagerfanta
+    public function paginate(FilterInterface $filter): Pagerfanta
     {
+        $search = (string)$filter->get('search');
+
+        return $this->getPaginator($filter->getPage(), $search);
+    }
+
+    protected function getPaginator(int $page, string $search): Pagerfanta
+    {
+        $criteria = Criteria::create()->where(Criteria::expr()->startsWith('firstName', $search));
+
         $qb = $this->createQueryBuilder('o');
-        if ($search) {
-            $qb->andWhere('o.firstName LIKE :search OR o.lastName LIKE :search')->setParameter('search', $search.'%');
-        }
+        $qb->addCriteria($criteria);
+
         $adapter = new DoctrineORMAdapter($qb);
 
-        return new Pagerfanta($adapter);
+        $pager = new Pagerfanta($adapter);
+        $pager->setCurrentPage($page);
+
+        return $pager;
     }
 }

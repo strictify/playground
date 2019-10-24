@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
-use App\Admin\Admin;
 use App\Annotation\SidebarGroup;
 use App\Annotation\SidebarMenu;
+use App\Filter\UsersFilter;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -23,14 +22,13 @@ class UsersController extends AbstractController
      *
      * @SidebarMenu(label="Users", icon="fas fa-tachometer-alt")
      */
-    public function index(Request $request, UserRepository $repository): Response
+    public function index(UserRepository $repository, UsersFilter $filter): Response
     {
-        $search = $request->query->getAlnum('search');
-        $pager = $repository->getPaginator($search);
+        $pager = $repository->paginate($filter);
 
         return $this->render('admin/users/list.html.twig', [
             'pager' => $pager,
-            'search' => $search,
+            'form' => $filter->getFormView(),
         ]);
     }
 

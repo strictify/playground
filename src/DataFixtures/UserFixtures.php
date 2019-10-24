@@ -20,7 +20,7 @@ class UserFixtures extends Fixture
 
         $factory = Factory::create();
         for ($i = 0; $i < 20; ++$i) {
-            $user = new User((string)$factory->firstName, (string)$factory->lastName, (string)$factory->email, '123123123');
+            $user = new User((string) $factory->firstName, (string) $factory->lastName, (string) $factory->email, '123123123');
             $manager->persist($user);
         }
 

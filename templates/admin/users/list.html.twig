@@ -16,13 +16,7 @@
             <div class="box-tools">
                 <div class="input-group input-group-sm hidden-xs">
                     <form class="form-inline">
-                        <div class="form-group">
-                            <input type="text"
-                                   name="search"
-                                   class="form-control pull-right"
-                                   placeholder="Search"
-                                   value="{{ search }}">
-                        </div>
+                        {{ form_row(form.search) }}
                         <div class="form-group">
                             <div class="input-group-btn">
                                 <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
@@ -43,7 +37,7 @@
                     <th>Status</th>
                 </tr>
                 {# @var user \App\Entity\User #}
-                {% for user in pager %}
+                {% for user in pager.currentPageResults %}
                     <tr>
                         <td>{{ user.id }}</td>
                         <td>{{ user }}</td>
