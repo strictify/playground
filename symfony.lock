@@ -129,6 +129,9 @@
     "friendsofsymfony/user-bundle": {
         "version": "v2.1.2"
     },
+    "fzaninotto/faker": {
+        "version": "v1.8.0"
+    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
@@ -146,6 +149,22 @@
     },
     "monolog/monolog": {
         "version": "1.25.1"
+    },
+    "myclabs/deep-copy": {
+        "version": "1.9.3"
+    },
+    "nelmio/alice": {
+        "version": "3.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "3.2",
+            "ref": "0b9900ece737bec7752e4155c0164639dd9b0cb0"
+        },
+        "files": [
+            "config/packages/dev/nelmio_alice.yaml",
+            "config/packages/test/nelmio_alice.yaml"
+        ]
     },
     "netresearch/jsonmapper": {
         "version": "v1.6.0"
@@ -204,8 +223,17 @@
     "roave/security-advisories": {
         "version": "dev-master"
     },
+    "sebastian/comparator": {
+        "version": "3.0.2"
+    },
     "sebastian/diff": {
         "version": "3.0.2"
+    },
+    "sebastian/exporter": {
+        "version": "3.1.2"
+    },
+    "sebastian/recursion-context": {
+        "version": "3.0.0"
     },
     "sensio/framework-extra-bundle": {
         "version": "5.2",

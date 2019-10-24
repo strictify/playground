@@ -41,8 +41,9 @@
         }
     ],
     "require-dev": {
-        "roave/security-advisories": "dev-master",
         "doctrine/doctrine-fixtures-bundle": "^3.2",
+        "nelmio/alice": "^3.5",
+        "roave/security-advisories": "dev-master",
         "symfony/debug-pack": "*",
         "symfony/maker-bundle": "^1.0",
         "symfony/profiler-pack": "*",

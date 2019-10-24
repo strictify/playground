@@ -7,6 +7,7 @@ namespace App\DataFixtures;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Faker\Factory;
 
 class UserFixtures extends Fixture
 {
@@ -16,6 +17,12 @@ class UserFixtures extends Fixture
         $admin->addRole('ROLE_SUPER_ADMIN');
         $admin->setEnabled(true);
         $manager->persist($admin);
+
+        $factory = Factory::create();
+        for ($i = 0; $i < 20; ++$i) {
+            $user = new User((string)$factory->firstName, (string)$factory->lastName, (string)$factory->email, '123123123');
+            $manager->persist($user);
+        }
 
         $manager->flush();
     }
