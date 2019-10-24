@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\ArgumentResolver;
 
+use App\Annotation\FilterConfig;
 use App\Filter\FilterInterface;
 use LogicException;
 use Symfony\Component\Form\{Extension\Core\Type\FormType, FormFactoryInterface};
@@ -39,7 +40,11 @@ class FilterArgumentValueResolver implements ArgumentValueResolverInterface
             throw new LogicException('Type is not set.');
         }
 
-        $formBuilder = $this->formFactory->createBuilder(FormType::class, null, [
+        /** @var FilterConfig|null $filterConfig */
+        $filterConfig = $request->attributes->get('_filter_name');
+        $name = $filterConfig ? $filterConfig->name : '';
+
+        $formBuilder = $this->formFactory->createNamedBuilder($name, FormType::class, null, [
             'csrf_protection' => false,
             'method' => 'GET',
         ]);

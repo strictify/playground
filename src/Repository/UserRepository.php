@@ -42,6 +42,7 @@ class UserRepository extends ServiceEntityRepository
         $adapter = new DoctrineORMAdapter($qb);
 
         $pager = new Pagerfanta($adapter);
+        $pager->setNormalizeOutOfRangePages(true);
         $pager->setCurrentPage($page);
 
         return $pager;
