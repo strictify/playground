@@ -7,7 +7,7 @@ namespace App\ArgumentResolver;
 use App\Annotation\FilterConfig;
 use App\Filter\FilterInterface;
 use LogicException;
-use Symfony\Component\Form\{Extension\Core\Type\FormType, FormFactoryInterface};
+use Symfony\Component\Form\{Extension\Core\Type\FormType, FormBuilderInterface, FormFactoryInterface};
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\{Controller\ArgumentValueResolverInterface, ControllerMetadata\ArgumentMetadata};
 use Generator;
@@ -42,15 +42,22 @@ class FilterArgumentValueResolver implements ArgumentValueResolverInterface
 
         /** @var FilterConfig|null $filterConfig */
         $filterConfig = $request->attributes->get('_filter_name');
-        $name = $filterConfig ? $filterConfig->name : '';
+        $formBuilder = $this->createFormBuilder($filterConfig);
 
-        $formBuilder = $this->formFactory->createNamedBuilder($name, FormType::class, null, [
-            'csrf_protection' => false,
-            'method' => 'GET',
-        ]);
         /** @var FilterInterface $filter */
         $filter = new $type($formBuilder, $request);
 
         yield $filter;
+    }
+
+    private function createFormBuilder(?FilterConfig $filterConfig): FormBuilderInterface
+    {
+        $name = $filterConfig ? $filterConfig->name : '';
+
+        return $this->formFactory->createNamedBuilder($name, FormType::class, null, [
+            'csrf_protection' => false,
+            'method' => 'GET',
+            'required' => false,
+        ]);
     }
 }
